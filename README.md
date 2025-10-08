@@ -17,7 +17,7 @@
 
 - **Cloudflare DNS 支持**：内置官方 Cloudflare DNS 插件，轻松实现基于 DNS-01 质询的泛域名及内网域名证书自动签发。
 - **跨平台架构**：为 `linux/amd64` 和 `linux/arm64` 提供原生二进制文件，无缝部署于主流服务器、NAS 及树莓派等 ARM 设备。
-- **完全自动化**：通过 GitHub Actions 每日自动检查 Caddy 官方新版本，一旦发现更新，将自动编译并发布新的 Release。
+- **完全自动化**：通过 GitHub Actions 每月自动检查 Caddy 官方新版本，一旦发现更新，将自动编译并发布新的 Release。
 - **与官方同步**：构建产物版本号与 Caddy 官方严格一致，确保您使用的是最新、最稳定的 Caddy 核心，并附带 SHA256 校验和。
 
 ---
@@ -120,7 +120,7 @@ export CF_API_TOKEN="<Your_Cloudflare_API_Token>"
 
 本仓库使用 GitHub Actions 自动化执行以下任务：
 
-1.  **每日检查**：定时任务每日触发，访问 Caddy 官方仓库 API，获取最新的版本号。
+1.  **每日检查**：定时任务每月触发，访问 Caddy 官方仓库 API，获取最新的版本号。
 2.  **版本比对**：检查本地仓库是否已存在该版本号的 Release。如果存在，则跳过本次任务。
 3.  **交叉编译**：如果发现新版本，则启动构建任务，使用 `xcaddy` 为 `linux/amd64` 和 `linux/arm64` 两个平台交叉编译 Caddy。
 4.  **插件验证**：在编译 `amd64` 版本后，会**严格执行验证步骤**，确保 Cloudflare 插件已成功集成。如果验证失败，构建将中止。

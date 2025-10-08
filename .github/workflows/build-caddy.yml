@@ -3,7 +3,7 @@ name: Build Custom Caddy with Cloudflare Plugin
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 2 * * 1'  # 每周一 UTC 02:00 (北京时间 10:00) 运行
+    - cron: '0 2 1 * *'  # 每月1号 UTC 02:00 (北京时间 10:00) 运行
 
 # 创建 Release 需要 'contents: write' 权限
 permissions:
