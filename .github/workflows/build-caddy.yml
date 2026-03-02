@@ -1,9 +1,9 @@
-name: Build Caddy with Plugin List
+name: Build Custom Caddy with Plugin List (amd64 only)
 
 on:
-  workflow_dispatch:      # 手动触发，直接使用仓库中的 plugins.list
+  workflow_dispatch:
   schedule:
-    - cron: '0 2 1 * *'   # 每月1号 UTC 02:00 自动运行
+    - cron: '0 2 1 * *'
 
 permissions:
   contents: write
@@ -60,9 +60,7 @@ jobs:
           # 如果 plugins.list 不存在，则使用默认插件（仅 Cloudflare DNS）
           if [[ ! -f plugins.list ]]; then
             echo "⚠️ plugins.list 未找到，使用默认插件：cloudflare"
-            cat > plugins.list << 'EOF'
-            cloudflare:github.com/caddy-dns/cloudflare@latest
-            EOF
+            echo "cloudflare:github.com/caddy-dns/cloudflare@latest" > plugins.list
           fi
 
           # 解析插件列表，生成两个文件：names.txt 和 urls.txt
