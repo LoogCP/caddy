@@ -1,0 +1,7 @@
+# 格式：
+#name:url(@ver)
+caddy-cgi:github.com/aksdb/caddy-cgi/v2
+caddy-webdav:github.com/mholt/caddy-webdav
+cloudflare:github.com/caddy-dns/cloudflare@latest
+alidns:github.com/caddy-dns/alidns
+caddy-l4:github.com/mholt/caddy-l4
