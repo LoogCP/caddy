@@ -1,0 +1,66 @@
+{
+        # 确保CGI在其他处理程序（如file_server）之前运行
+        order cgi before respond
+        # 设置自定义HTTPS端口；不定义HTTP端口以避免冲突
+        https_port 10443
+        # 可选：添加你的邮箱用于ACME通知
+        # email your.email@example.com
+}
+
+# 站点块，用于主域名和通配符子域名
+example.com, *.example.com {
+        # TLS配置，使用DNS挑战
+        tls {
+                dns cloudflare <cf_token>   #填入cf_token，不需要<>包围
+          # 可选：使用Cloudflare的DNS解析器以提高可靠性
+                resolvers 1.1.1.1
+        }
+
+        # 设置文件服务的根目录（OpenWrt的默认Web根目录）
+        root * /www
+
+        # 启用非CGI路径的静态文件服务
+        file_server
+
+        # 将根路径重定向到LuCI以便管理访问
+        redir / /cgi-bin/luci
+
+        # LuCI和相关脚本的CGI处理程序
+        cgi /cgi-bin/cgi-backup* /www/cgi-bin/cgi-backup {
+                script_name /cgi-bin/cgi-backup
+                unbuffered_output
+        }
+        cgi /cgi-bin/cgi-download* /www/cgi-bin/cgi-download {
+                script_name /cgi-bin/cgi-download
+                unbuffered_output
+        }
+        cgi /cgi-bin/cgi-exec* /www/cgi-bin/cgi-exec {
+                script_name /cgi-bin/cgi-exec
+                unbuffered_output
+        }
+        cgi /cgi-bin/cgi-upload* /www/cgi-bin/cgi-upload {
+                script_name /cgi-bin/cgi-upload
+                unbuffered_output
+        }
+        cgi /cgi-bin/luci* /www/cgi-bin/luci {
+                script_name /cgi-bin/luci
+                unbuffered_output
+        }
+
+        # ubus处理程序，用于LuCI的API调用（需要ubus.sh脚本）
+        cgi /ubus* /etc/caddy/ubus.sh {
+                script_name /ubus
+                unbuffered_output
+        }
+
+
+        # 可选：WebDAV处理程序，用于/dav路径的文件共享
+        # handle_path /dav* {
+        #     webdav {
+        #         root /mnt/sda1/files  # 替换为你想要的目录
+        #         prefix /dav
+        #         # 可选：如果只读，则禁用修改
+        #         # modify false
+        #     }
+        # }
+}
