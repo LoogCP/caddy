@@ -19,10 +19,12 @@
 
 1. 检查plugins.list中插件是否包含你想要的，如果没有，则fork后修改plugins.list文件，修改preset-caddy.sh文件的REPO变量
 2. 在编译OpenWrt/immortalwrt流程中执行preset-caddy.sh（make之前）
+3. 初次刷入或不保留配置刷入带此caddy的固件后，需要先ssh进入路由器，编辑Caddyfile中的配置，停止并禁用*uhttpd/nginx*后重启caddy
+4. 我正在无故障使用中，任何问题请善用AI。I am currently operating without any faults. If you encounter any issues, please refer to AI.
 
 ---
 
-### why caddy
+### ❓why caddy
 
 caddy可通过内置模块直接实现使用acme申请ssl证书，实现https访问（好像现在Nginx也可以），OpenWrt的luci-app-acme有问题，通常无法正确申请到证书。
 
@@ -43,3 +45,4 @@ caddy可通过内置模块直接实现使用acme申请ssl证书，实现https访
 - [Caddy](https://github.com/caddyserver/caddy)
 - [xcaddy](https://github.com/caddyserver/xcaddy)
 - [caddy-dns/cloudflare](https://github.com/caddy-dns/cloudflare)
+- [qichiyuhub/caddy-cloudflare](https://github.com/qichiyuhub/caddy-cloudflare)
