@@ -22,6 +22,10 @@
 
 ---
 
+### why caddy
+
+caddy可通过内置模块直接实现使用acme申请ssl证书，实现https访问（好像现在Nginx也可以），OpenWrt的luci-app-acme有问题，通常无法正确申请到证书。
+
 ### 🛠️ 工作原理
 
 本仓库使用 GitHub Actions 自动化执行以下任务：
