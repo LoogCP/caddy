@@ -1,9 +1,9 @@
 # 🚀 Custom Caddy Build · 内置 Cloudflare DNS 插件
 
-[![构建状态](https://github.com/qichiyuhub/caddy-cloudflare/actions/workflows/build-caddy.yml/badge.svg)](https://github.com/qichiyuhub/caddy-cloudflare/actions)
-[![最新版本](https://img.shields.io/github/v/release/qichiyuhub/caddy-cloudflare)](https://github.com/qichiyuhub/caddy-cloudflare/releases/latest)
+[![构建状态](https://github.com/LoogCP/caddy/actions/workflows/build-caddy.yml/badge.svg)](https://github.com/LoogCP/caddy/actions)
+[![最新版本](https://img.shields.io/github/v/release/LoogCP/caddy)](https://github.com/LoogCP/caddy/releases/latest)
 
-这是一个自动化构建项目，旨在提供集成了官方 **Cloudflare DNS 插件** 的 **Caddy** 二进制文件。您无需自行搭建 Go 编译环境，即可从 [Releases](https://github.com/qichiyuhub/caddy-cloudflare/releases/latest) 页面直接下载用于生产环境、支持 DNS-01 质询的 Caddy。
+这是一个自动化构建项目，旨在提供集成了官方 **Cloudflare DNS 插件** 的 **Caddy** 二进制文件。您无需自行搭建 Go 编译环境，即可从 [Releases](https://github.com/LoogCP/caddy/releases/latest) 页面直接下载用于生产环境、支持 DNS-01 质询的 Caddy。
 
 ---
 
@@ -68,10 +68,12 @@ your.domain.com, *.your.domain.com {
           "listen": [":443"],
           "routes": [
             {
-              "handle": [{
-                "handler": "reverse_proxy",
-                "upstreams": [{ "dial": "localhost:8080" }]
-              }]
+              "handle": [
+                {
+                  "handler": "reverse_proxy",
+                  "upstreams": [{ "dial": "localhost:8080" }]
+                }
+              ]
             }
           ]
         }
@@ -79,20 +81,24 @@ your.domain.com, *.your.domain.com {
     },
     "tls": {
       "automation": {
-        "policies": [{
-          "subjects": ["your.domain.com", "*.your.domain.com"],
-          "issuers": [{
-            "module": "acme",
-            "challenges": {
-              "dns": {
-                "provider": {
-                  "name": "cloudflare",
-                  "api_token": "{env.CF_API_TOKEN}"
+        "policies": [
+          {
+            "subjects": ["your.domain.com", "*.your.domain.com"],
+            "issuers": [
+              {
+                "module": "acme",
+                "challenges": {
+                  "dns": {
+                    "provider": {
+                      "name": "cloudflare",
+                      "api_token": "{env.CF_API_TOKEN}"
+                    }
+                  }
                 }
               }
-            }
-          }]
-        }]
+            ]
+          }
+        ]
       }
     }
   }
@@ -131,3 +137,4 @@ export CF_API_TOKEN="<Your_Cloudflare_API_Token>"
 - [Caddy](https://github.com/caddyserver/caddy)
 - [xcaddy](https://github.com/caddyserver/xcaddy)
 - [caddy-dns/cloudflare](https://github.com/caddy-dns/cloudflare)
+
