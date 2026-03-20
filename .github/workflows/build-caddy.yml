@@ -1,9 +1,9 @@
-name: Build Custom Caddy with Plugin List (amd64 only)
+name: Bluid Caddy With Custom Plugin
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 2 1 * *'
+    - cron: "0 2 1 * *"
 
 permissions:
   contents: write
@@ -38,7 +38,7 @@ jobs:
     if: needs.resolve.outputs.release_exists != 'true'
     runs-on: ubuntu-latest
     env:
-      GO_VERSION: '1.25.0'
+      GO_VERSION: "1.25.0"
     steps:
       - name: 检出仓库代码
         uses: actions/checkout@v4
